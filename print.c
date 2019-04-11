@@ -42,12 +42,13 @@ void	draw_menu(t_mlx_data *data)
 	else
 	{
 		mlx_string_put(MLX_PTR, WIN_PTR, 20, 20, 0xFFFFFF, "Close Menu");
-		mlx_string_put(MLX_PTR, WIN_PTR, 20, 60, 0xFFFFFF, "Move:        Arrows");
-		mlx_string_put(MLX_PTR, WIN_PTR, 20, 80, 0xFFFFFF, "Zoom in:     + / Right mouse / Scroll down");
-		mlx_string_put(MLX_PTR, WIN_PTR, 20, 100, 0xFFFFFF, "Zoom out:    - / Left mouse  / Scroll up");
-		mlx_string_put(MLX_PTR, WIN_PTR, 20, 120, 0xFFFFFF, "Mandelbrot:  M");
-		mlx_string_put(MLX_PTR, WIN_PTR, 20, 140, 0xFFFFFF, "Burningship: B");
-
-		mlx_string_put(MLX_PTR, WIN_PTR, 20, 160, 0xFFFFFF, "Reset:       R");
+		mlx_string_put(MLX_PTR, WIN_PTR, 20, 60, 0xFFFFFF, "Move:              Arrows");
+		mlx_string_put(MLX_PTR, WIN_PTR, 20, 80, 0xFFFFFF, "Zoom in:           + / Right mouse / Scroll down");
+		mlx_string_put(MLX_PTR, WIN_PTR, 20, 100, 0xFFFFFF, "Zoom out:          - / Left mouse  / Scroll up");
+        mlx_string_put(MLX_PTR, WIN_PTR, 20, 120, 0xFFFFFF, "Change iterations: + / - (numpad)");
+        mlx_string_put(MLX_PTR, WIN_PTR, 20, 140, 0xFFFFFF, "Change colors:     1 - 3 (numrow)");
+		mlx_string_put(MLX_PTR, WIN_PTR, 20, 160, 0xFFFFFF, "Mandelbrot:        M");
+		mlx_string_put(MLX_PTR, WIN_PTR, 20, 180, 0xFFFFFF, "Burningship:       B");
+		mlx_string_put(MLX_PTR, WIN_PTR, 20, 200, 0xFFFFFF, "Reset:             R");
 	}
 }
