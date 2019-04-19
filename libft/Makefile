@@ -6,12 +6,11 @@
 #    By: jvisser <jvisser@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/01/12 12:07:57 by jvisser        #+#    #+#                 #
-#    Updated: 2019/04/04 15:26:28 by jvisser       ########   odam.nl          #
+#    Updated: 2019/04/12 16:11:18 by jvisser       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-TEST = libft_test.c
 FLAGS = -Wall -Wextra -Werror
 HEADER = libft.h ft_printf/ft_printf.h
 C_FILES =	ft_memalloc.c\
@@ -30,6 +29,7 @@ C_FILES =	ft_memalloc.c\
 			ft_strlench.c\
 			ft_wstrbytes.c\
 			\
+			get_next_line.c\
 			ft_strnew.c\
 			ft_strclr.c\
 			ft_strdel.c\
@@ -83,6 +83,7 @@ C_FILES =	ft_memalloc.c\
 			ft_lltoa.c\
 			ft_ulltoa_base.c\
 			ft_cap_lftoa.c\
+			ft_cap_lftoa2.c\
 			\
 			ft_putchar.c\
 			ft_putchar_fd.c\
@@ -136,22 +137,27 @@ O_FILES =	$(C_FILES:.c=.o)
 all: $(NAME)
 
 %.o: %.c
-	gcc -c $(FLAGS) $<
+	@echo "\033[1;32m 🛠️  Building $@ from $< file \033[0m"
+	@gcc $(FLAGS) -c -o $@ $<
 
 $(NAME): $(O_FILES)
-	ar rcs $(NAME) $(notdir $(O_FILES))
+	@echo "\033[1;32m 🛠️  Building library from objects \033[0m"
+	@ar rcs $(NAME) $(O_FILES)
 
 clean:
-	/bin/rm -f $(notdir $(O_FILES))
+ifeq (,$(wildcard $(O_FILES)))
+	@echo "\033[1;31m 🗑️  No objects to clean \033[0m"
+else
+	@echo "\033[1;31m 🗑️  Cleaning library objects \033[0m"
+	@/bin/rm -f $(O_FILES)
+endif
 
 fclean: clean
-	/bin/rm -f $(NAME)
-	/bin/rm -f a.out
-
-test: re
-	gcc -Wall -Wextra -Werror -L. -lft $(TEST)
-
-testnow: test
-	./a.out
+ifeq (,$(wildcard $(NAME)))
+	@echo "\033[1;31m 🗑️  No library to clean \033[0m"
+else
+	@echo "\033[1;31m 🗑️  Cleaning libft.a file \033[0m"
+	@/bin/rm -f $(NAME)
+endif
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: jvisser <jvisser@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/08 18:52:27 by jvisser        #+#    #+#                */
-/*   Updated: 2019/03/11 14:35:06 by jvisser       ########   odam.nl         */
+/*   Updated: 2019/03/25 19:10:13 by jvisser       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define LIBFT_H
 # include <wchar.h>
 # include <string.h>
+
+# define BUFF_SIZE 30
 
 typedef	struct	s_list
 {
@@ -47,6 +49,7 @@ int				ft_wstrbytes(wchar_t *wstr);
 /*
 **				>>>>	STRING MODIFICATION
 */
+int				get_next_line(const int fd, char **line);
 char			*ft_strnew(size_t size);
 void			ft_strclr(char *s);
 void			ft_strdel(char **as);
@@ -109,9 +112,15 @@ char			*ft_itoa_base(int value, int base);
 char			*ft_lltoa(long long n);
 char			*ft_ulltoa_base(unsigned long long n, int base);
 char			*ft_cap_lftoa(long double n, int precision);
+void			ft_cap_lftoa_set_other_nums(int i, char **result);
+int				ft_cap_lftoa_rounding(long double f_part_c, int precision,
+									long double *f_part, long long *i_part);
+void			ft_cap_lftoa_add_number(int *i, char **result,
+										long double *f_part);
 /*
 **				>>>>	PRINTING
 */
+int				ft_printf(const char *format, ...);
 void			ft_putchar(char c);
 void			ft_putchar_fd(char c, int fd);
 int				ft_putwchar(wchar_t c);
@@ -124,7 +133,6 @@ void			ft_putendl(char const *s);
 void			ft_putendl_fd(char const *s, int fd);
 void			ft_putnbr(int n);
 void			ft_putnbr_fd(int n, int fd);
-int				ft_printf(const char *format, ...);
 /*
 **				>>>>	LIST MODIFICATION
 */

@@ -6,7 +6,7 @@
 /*   By: jvisser <jvisser@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/02/14 18:34:49 by jvisser        #+#    #+#                */
-/*   Updated: 2019/03/04 14:59:57 by jvisser       ########   odam.nl         */
+/*   Updated: 2019/03/07 19:53:43 by jvisser       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,46 +77,45 @@ int				inttostr(long long x, char *result, int d)
 	return (index);
 }
 
-int				rounding(long double f_part)
+void			fill_result(long long i_part, long double f_part,
+							int precision, char **result)
 {
-	f_part = f_part * 10;
-	if (((long long)f_part) % 10 >= 5)
-		return (1);
-	else if (((int)f_part) % 10 >= 0)
-		return (0);
-	return (0);
+	int	i;
+
+	i = inttostr(i_part, *result, 0);
+	if (precision >= 1)
+		(*result)[i] = '.';
+	while (precision > 1)
+	{
+		i++;
+		ft_cap_lftoa_add_number(&i, result, &f_part);
+		precision--;
+	}
+	if (precision == 1)
+	{
+		i++;
+		if (ft_cap_lftoa_rounding(f_part * 10, precision, &f_part, &i_part))
+			ft_cap_lftoa_set_other_nums(i, result);
+		else
+			ft_cap_lftoa_add_number(&i, result, &f_part);
+	}
 }
 
 char			*ft_cap_lftoa(long double n, int precision)
 {
-	int			i;
 	long long	i_part;
 	long double	f_part;
 	char		*result;
 
 	i_part = (long long)n;
 	f_part = n - (long double)i_part;
-	if (precision > 0)
-		f_part *= ft_powerof(10, precision);
 	result = (char*)malloc(countnumbers(i_part) + precision + 2);
 	if (!result)
 		return (NULL);
 	if (f_part < 0)
 		f_part *= -1;
-	if (rounding(f_part))
-	{
-		if (precision > 0)
-			f_part += 1;
-		else if (i_part < 0)
-			i_part--;
-		else
-			i_part++;
-	}
-	i = inttostr(i_part, result, 0);
-	if (precision > 0)
-	{
-		result[i] = '.';
-		inttostr(((long long)f_part), result + i + 1, precision);
-	}
+	if (precision <= 0)
+		ft_cap_lftoa_rounding(f_part, precision, &f_part, &i_part);
+	fill_result(i_part, f_part, precision, &result);
 	return (result);
 }
